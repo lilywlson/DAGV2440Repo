@@ -1,0 +1,28 @@
+polyCone -ch on -o on -r 3.505138 -h 10.062447 -cuv 3 ;
+
+select -af polyCone1 ;
+
+setAttr "pCone1.rotateZ" -180;
+
+polySphere -ch on -o on -r 3.372323 ;
+
+setAttr "pSphere1.translateX" 0;
+setAttr "pSphere1.translateZ" 0;
+
+move -r 0 6.481878 0 ;
+
+polySphere -ch on -o on -r 3.372323 ;
+
+setAttr "pSphere1.translateX" 0;
+setAttr "pSphere1.translateZ" 0;
+
+move -r 0 10.513793 0 ;
+
+polySphere -ch on -o on -r 3.372323 ;
+
+setAttr "pSphere1.translateX" 0;
+setAttr "pSphere1.translateZ" 0;
+
+move -r 0 14.510241 0 ;
+move -r 0 -0.446227 0 ;
+
