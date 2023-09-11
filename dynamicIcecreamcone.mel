@@ -1,0 +1,19 @@
+int $size = 5;
+int $location = 1;
+
+polySphere -r $size -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+move -r 0 ($size * 2.5) 0 ;
+move -r ($size * $location) 0 0 ;
+
+polySphere -r $size -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+move -r 0 ($size * 3.5) 0 ;
+move -r ($size * $location) 0 0 ;
+
+polySphere -r $size -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+move -r 0 ($size * 4.5) 0 ;
+move -r ($size * $location) 0 0 ;
+
+polyCone -r ($size * 1.1) -h ($size * 2) -sx 20 -sy 1 -sz 0 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+rotate -r -os -fo 0 0 -180 ;
+move -r 0 ($size * (3/2)) 0 ;
+move -r ($size * $location) 0 0 ;
