@@ -1,0 +1,26 @@
+//Function
+proc StaircaseGen(int $numSteps, float $stairWidth, float $stairHeight, float $stairLength)
+{
+    float $radius = 10;
+    float $rotation = 15;
+
+    // Create the spiral staircase
+    float $angle = 1;
+    for ($i = 1; $i <= $numSteps; $i++) {
+        // Calculate the position of each step
+        float $x = $radius * cos(deg_to_rad($angle));
+        float $z = $radius * sin(deg_to_rad($angle));
+        float $y = $i * $stairHeight;
+
+        // Create a cube for each step
+        polyCube -width $stairWidth -height $stairHeight -depth $stairLength -name ("Step_" + $i);
+        move -r ($x) ($y) ($z);
+        rotate -r 0 (-$angle) 0;
+
+        // Increment the rotation angle for the next step
+        $angle += $rotation;
+    }
+}
+
+//Ex Function Call
+StaircaseGen(30, 5, 0.5, 2);
