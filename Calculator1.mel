@@ -1,0 +1,110 @@
+global proc float calculator(float $input[], int $operation) {
+    // Initialize variables to store the result and operation description
+    float $result = 0;
+    string $operationDesc = "";
+
+    // Check the operation code and perform the corresponding operation
+    if ($operation == 1) { // Addition
+        $result = addition($input);
+        $operationDesc = "sum";
+    } else if ($operation == 2) { // Subtraction
+        $result = subtraction($input);
+        $operationDesc = "difference";
+    } else if ($operation == 3) { // Multiplication
+        $result = multiplication($input);
+        $operationDesc = "product";
+    } else if ($operation == 4) { // Division
+        $result = division($input);
+        $operationDesc = "division";
+    } else if ($operation == 5) { // Power
+        if (size($input) == 2) {
+            $result = power($input[0], $input[1]);
+            $operationDesc = "power";
+        } else {
+            error("Power operation requires two input values.");
+        }
+    } else if ($operation == 6) { // Mean (Average)
+        $result = mean($input);
+        $operationDesc = "mean";
+    } else if ($operation == 7) { // Median
+        $result = median($input);
+        $operationDesc = "median";
+    } else {
+        error("Invalid operation code.");
+    }
+
+    // Create a descriptive statement and print the result
+    // string $inputStr = stringArrayToString($input, ", ");
+    string $resultStatement = "The $operationDesc of $inputStr is $result.";
+    print($resultStatement + "\n");
+
+    // Return the result
+    return $result;
+}
+
+// Sub-functions for arithmetic operations
+global proc float addition(float $numbers[]) {
+    float $sum = 0;
+    for ($num in $numbers) {
+        $sum += $num;
+    }
+    return $sum;
+}
+
+global proc float subtraction(float $numbers[]) {
+    float $result = $numbers[0];
+    for ($i = 1; $i < size($numbers); $i++) {
+        $result -= $numbers[$i];
+    }
+    return $result;
+}
+
+global proc float multiplication(float $numbers[]) {
+    float $product = 1;
+    for ($num in $numbers) {
+        $product *= $num;
+    }
+    return $product;
+}
+
+global proc float division(float $numbers[]) {
+    float $result = $numbers[0];
+    for ($i = 1; $i < size($numbers); $i++) {
+        if ($numbers[$i] != 0) {
+            $result /= $numbers[$i];
+        } else {
+            error("Division by zero is not allowed.");
+        }
+    }
+    return $result;
+}
+
+global proc float power(float $base, float $exponent) {
+    return pow($base, $exponent);
+}
+
+global proc float mean(float $numbers[]) {
+    float $sum = addition($numbers);
+    return $sum / size($numbers);
+}
+
+global proc float median(float $numbers[]) {
+    float $sortedNumbers[] = sort($numbers);
+    int $count = size($sortedNumbers);
+    
+    if ($count % 2 == 0) {
+        // If even number of elements, average the middle two
+        int $middleIndex1 = ($count / 2) - 1;
+        int $middleIndex2 = $count / 2;
+        return ($sortedNumbers[$middleIndex1] + $sortedNumbers[$middleIndex2]) / 2;
+    } else {
+        // If odd number of elements, return the middle element
+        int $middleIndex = ($count - 1) / 2;
+        return $sortedNumbers[$middleIndex];
+    }
+}
+
+// Example usage:
+// float $inputNumbers[] = {3.0, 5.0, 8.0};
+// int $operationCode = 1; // Addition
+// float $result = calculator($inputNumbers, $operationCode);
