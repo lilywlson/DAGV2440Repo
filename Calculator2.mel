@@ -3,6 +3,13 @@ global proc float calculator(float $input[], int $operation) {
     float $result = 0;
     string $operationDesc = "";
 
+    int $size = size($input);
+    float $calTwo[];
+    for($i=0;$i<$size-1;++$i) {
+        $calTwo[$i] = $input[$i];
+
+    }
+
     // Check the operation code and perform the corresponding operation
     if ($operation == 1) { // Addition
         $result = addition($input);
@@ -34,9 +41,9 @@ global proc float calculator(float $input[], int $operation) {
     }
 
     // Create a descriptive statement and print the result
-    // Argument read
+    string $inputStr = floatArrayToString($calTwo, ", ");
     string $resultStatement = "The $operationDesc of $inputStr is $result.";
-    print($resultStatement + "\n");
+    print("The "+$operationDesc+" of "+$inputStr+", and "+ $input[$size-1]+" is "+$result + "\n");
 
     // Return the result
     return $result;
@@ -104,7 +111,10 @@ global proc float median(float $numbers[]) {
     }
 }
 
+
+
 // Example usage:
-// float $inputNumbers[] = {3.0, 5.0, 8.0};
-// int $operationCode = 1; // Addition
-// float $result = calculator($inputNumbers, $operationCode);
+float $inputNumbers[] = {3.0, 5.0, 8.0};
+int $operationCode = 1; // Addition
+float $result = calculator($inputNumbers, $operationCode);
+print($result);
