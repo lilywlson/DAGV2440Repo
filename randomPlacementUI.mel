@@ -1,0 +1,60 @@
+// Function to duplicate and randomly disperse objects
+proc int duplicateAndDisperse(int $numDuplicates, float $minX, float $maxX, float $minY, float $maxY, float $minZ, float $maxZ) {
+    string $selectedObjects[] = `ls -selection`;
+
+    if (size($selectedObjects) == 0) {
+        warning("Please select at least one object to duplicate.");
+        return 0;
+    }
+
+    for ($i = 0; $i < $numDuplicates; $i++) {
+        string $duplicateObject[] = `duplicate $selectedObjects`;
+
+        float $randX = rand($minX, $maxX);
+        float $randY = rand($minY, $maxY);
+        float $randZ = rand($minZ, $maxZ);
+
+        move $randX $randY $randZ $duplicateObject;
+    }
+
+    return 1;
+}
+
+// Example usage:
+// duplicateAndDisperse(5, -10, 10, 0, 20, -5, 5);
+
+// Function to be called when the button is pressed
+global proc callDuplicateAndDisperseFunction() {
+    print("YeeHaw");
+    int $numDuplicates[] = `intFieldGrp -q -value duplicateCountField`;
+    float $xRange[] = `floatFieldGrp -q -value xRangeField`;
+    float $yRange[] = `floatFieldGrp -q -value yRangeField`;
+    float $zRange[] = `floatFieldGrp -q -value zRangeField`;
+
+    duplicateAndDisperse($numDuplicates[0], $xRange[0], $xRange[1], $yRange[0], $yRange[1], $zRange[0], $zRange[1]);
+}
+
+// UI script for the tool
+if (`window -exists duplicateAndDisperseWindow`) {
+    deleteUI duplicateAndDisperseWindow;
+}
+
+window -title "Duplicate and Disperse Tool" duplicateAndDisperseWindow;
+columnLayout -adjustableColumn true;
+
+text -label "Number of Duplicates:";
+intFieldGrp -numberOfFields 1 -label " " duplicateCountField;
+
+text -label "X Range:";
+floatFieldGrp -numberOfFields 2 -label "Min Max" xRangeField;
+
+text -label "Y Range:";
+floatFieldGrp -numberOfFields 2 -label "Min Max" yRangeField;
+
+text -label "Z Range:";
+floatFieldGrp -numberOfFields 2 -label "Min Max" zRangeField;
+print("Yote");
+button -label "Duplicate and Disperse" -command "callDuplicateAndDisperseFunction";
+
+showWindow duplicateAndDisperseWindow;
+
