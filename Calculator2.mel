@@ -111,10 +111,58 @@ global proc float median(float $numbers[]) {
     }
 }
 
+float $inputNumbers[];
+
+global proc CalculatorCaller(int $functionType)
+{
+    string $op1 = `optionVar -q "opField1"`;
+    string $op2 = `optionVar -q "opField2"`;
+    string $resultLine = `optionVar -q "resultField"`;
+    
+    $inputNumbers[0] = `floatField -q -value $op1`;
+    $inputNumbers[1] = `floatField -q -value $op2`;
+
+   float $result = calculator($inputNumbers, $functionType);
+   string $temp = "Your result is: "+ $result;
+   textField -e -text $temp $resultLine;
+}
+
+global proc CalculatorUI()
+{
+string $mWindow = "opWindow";
+
+if (`window -exists $mWindow`)
+    deleteUI $mWindow;
+
+$mWindow = `window -title "Calculator" 
+                    -w 1000
+                    -h 1000
+                    -resizeToFitChildren 1
+                    $mWindow`;
+string $mColumn = `columnLayout -parent $mWindow`;
+optionVar -stringValue "opField1"  `floatField -parent $mColumn -w 410 -h 50`;
+optionVar -stringValue "opField2"  `floatField -parent $mColumn -w 410 -h 50`;
+rowLayout -parent $mColumn -numberOfColumns 7;
+    button -label "Add" -w 100 -h 100 -command "CalculatorCaller(1)";
+    button -label "Subtract" -w 100 -h 100 -command "CalculatorCaller(2)";
+    button -label "Multiply" -w 100 -h 100 -command "CalculatorCaller(3)";
+    button -label "Divide" -w 100 -h 100 -command "CalculatorCaller(4)";
+rowLayout -parent $mColumn -numberOfColumns 3;
+    button -label "Power" -w 100 -h 100 -command "CalculatorCaller(5)";
+    button -label "Mean" -w 100 -h 100 -command "CalculatorCaller(6)";
+    button -label "Median" -w 100 -h 100 -command "CalculatorCaller(7)";
+rowLayout -parent $mColumn -numberOfColumns 1;
+    optionVar -stringValue "resultField" `textField -editable 0 -w 410 -h 50`;
+
+showWindow $mWindow;
+}
+
+CalculatorUI();
+
 
 
 // Example usage:
-float $inputNumbers[] = {3.0, 5.0, 8.0};
-int $operationCode = 1; // Addition
-float $result = calculator($inputNumbers, $operationCode);
-print($result);
+// float $inputNumbers[] = {3.0, 5.0, 8.0};
+// int $operationCode = 1; // Addition
+// float $result = calculator($inputNumbers, $operationCode);
+// print($result);
