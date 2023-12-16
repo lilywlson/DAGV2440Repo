@@ -12,6 +12,7 @@ class windowUI:
 
         cmds.window(window_name, title="Window UI", widthHeight=(300, 150))
         cmds.columnLayout(adjustableColumn=True)
+        cmds.button(label="Duplicate and Disperse", command=self.duplicate_and_disperse)
         cmds.text(label="Number of Duplicates:")
         duplicateCountField = cmds.intFieldGrp(numberOfFields=1, label=" ")
 
@@ -23,12 +24,12 @@ class windowUI:
 
         cmds.text(label="Z Range:")
         zRangeField = cmds.floatFieldGrp(numberOfFields=2, label="Min Max")
-        cmds.button(label="Duplicate and Disperse", command=self.duplicate_and_disperse(5, -10, 10, 0, 20, -5, 5))
+        
         cmds.showWindow(window_name)
 
     
 
-    def duplicate_and_disperse(x,num_duplicates, min_x, max_x, min_y, max_y, min_z, max_z):
+    def duplicate_and_disperse(num_duplicates, min_x, max_x, min_y, max_y, min_z, max_z):
         selected_objects = cmds.ls(selection=True)
 
         if not selected_objects:
